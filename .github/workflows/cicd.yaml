@@ -3,7 +3,7 @@ name: CI Pipeline
 on:
   push:
     branches: [main]
-  pull_request:
+  pull_request:   
     branches: [main]
 
 jobs:
@@ -31,6 +31,12 @@ jobs:
 
       - name: Install Vercel CLI
         run: npm install --global vercel@canary
+
+      - name: Debug Vercel Token
+        run: echo "Vercel Token Length: ${#secrets.VERCEL_TOKEN}"
+
+      - name: Authenticate Vercel
+        run: vercel login --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
